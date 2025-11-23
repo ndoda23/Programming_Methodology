@@ -35,7 +35,7 @@ public class HangmanLexicon {
 
 		} 
 		
-		// vitvaliswineb sxvadasxva saxis errorebs.
+		// error handling
 		
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
