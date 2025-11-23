@@ -25,9 +25,8 @@ public class NameSurfer extends Program implements NameSurferConstants {
 	private NameSurferEntry rnk;
 	
 	
-	// vamateb interaqtorebs.
+	// adding interactors.
 	public void init() {
-		// You fill this in, along with any helper methods //
 		nameField = new JLabel("Name");
 		add(nameField, SOUTH);
 
@@ -56,9 +55,9 @@ public class NameSurfer extends Program implements NameSurferConstants {
 	 * you will have to define a method to respond to button actions.
 	 */
 	
-	// romel gilakze dacherisas ra unda qnas , tu ubralod saxels sheiyvans da enters daawveba 
-	// chveulebrivad dauxatavs grafiks. tu saxeli ar gvaqvs siashi , textfields ubralod 
-	// asuftavebs da tavidan gadzlevs sashualebas chaweris.
+// Depending on which button is pressed, it determines what should happen. 
+// If the name is entered, the graph is displayed. 
+// If the name is not entered, the text fields are cleared and the user is prompted to enter a name.
 	public void actionPerformed(ActionEvent e) {
 		// You fill this in //
 		if (e.getActionCommand().equals("Clear")) {
