@@ -16,26 +16,26 @@ public class Hangman extends ConsoleProgram {
 
 	private HangmanCanvas canvas;
 
-	// cdebis raodenoba.
+	// number of guesses
 	private int numOfGuesses = 8;
 
-	//randomgenerator rata sityvebi randomad davageneriro.
+	// for generating words
 	private RandomGenerator rgen = RandomGenerator.getInstance();
 
 	private HangmanLexicon words;
 
-	//random word array listidan.
+	
 	private String randomWord;
 
 	
 	private String blockedWord;
 
-	//aso romelsac motamashe shemoitans.
+	// letter for player 
 	private char enteredSymbol;
 
 	private String incorrectLetters;
 	
-	// canvasistvis.
+	// canva
 	public void init() {
 		canvas = new HangmanCanvas();
 		add(canvas);
@@ -54,7 +54,7 @@ public class Hangman extends ConsoleProgram {
 	}
 
 	
-	// igebs listidan randomad romelime sityvas.
+	// takes random word from the list
 	public String pickRandomWord() {
 
 		int x = rgen.nextInt(0, words.getWordCount() - 1);
@@ -64,7 +64,7 @@ public class Hangman extends ConsoleProgram {
 		return randomWord;
 	}
 
-	//itvlis ramdeni asoa da wers imden - s. 
+	// counts number of letters
 	private String howManyLetters() {
 
 		String res = "";
@@ -75,7 +75,7 @@ public class Hangman extends ConsoleProgram {
 		return res;
 	}
 
-	// tamashis mtavari nawili swored aq mimdinareobs.
+	// main gameplay
 	private void playingGame() {
 
 		while (numOfGuesses >= 0) {
@@ -83,17 +83,17 @@ public class Hangman extends ConsoleProgram {
 			canvas.reset();
 			canvas.displayWord(blockedWord);
 			String entered = readLine("Your guess: ");
-			//tu patara asoa vzrdit , radgan pirobashi ase gvaqvs mocemuli
+			
 			entered = entered.toUpperCase();
 			enteredSymbol = entered.charAt(0);
 
-			//vitvaliswineb tu shemotanili stringis zoma 1 ze metia.
+			// if entered string is longer than 1
 			if (entered.length() > 1) {
 				println("You have to enter only 1 symbol.");
 				continue;
 			}
 
-			// es imistvis tu asos garda raime sxva shemoiyvana.
+			// if you don't entered letter 
 			int x = 0;
 
 			for (char c = 'A'; c <= 'Z'; c++) {
@@ -111,10 +111,10 @@ public class Hangman extends ConsoleProgram {
 
 			}
 
-			// aq amowmebs pirobebs , emtxveva tu ara randomwords shemotanili symbolo.
+			// condition checker 
 			checkConditions();
 
-			//roca cdebis raodenoba amoiwureba waage.
+			// You lose when u have no more attempts
 			if (numOfGuesses == 0) {
 
 				println("You're completely hung.");
@@ -124,7 +124,7 @@ public class Hangman extends ConsoleProgram {
 				break;
 			}
 
-			//tu shemotanili simboloebit aawyve randomword , moige.
+			// You win if you manage to build random word
 			if (randomWord.equals(blockedWord)) {
 
 				println("You guessed the word:" + " " + randomWord);
@@ -138,9 +138,11 @@ public class Hangman extends ConsoleProgram {
 	}
 
 	
-	// amowmebs pirobebs , emtxveva tu ara shemotanili simbolo randomwordis romelime indexad myof simmbolos.
-	// tu emtxveva blockedWordshi am asos gamoachens , tu ar emtxveva cdebis raodenobas dagaklebs.
-	private void checkConditions() {
+    // Checks conditions: verifies whether the incoming character
+    // matches the character found at any index of randomWord.
+    // If it matches, it reveals that letter in blockedWord;
+    // If it does not match, it decreases the number of attempts.
+    private void checkConditions() {
 
 		if (randomWord.indexOf(enteredSymbol) == -1) {
 			if (numOfGuesses > 0) {
@@ -167,9 +169,8 @@ public class Hangman extends ConsoleProgram {
 		}
 
 	}
-
 	
-	// dablokil sityvas updates uketebs tu momxmareblis mier chawerili simbolo emtxveva randomWordis romelime asos.
+	// This method updates blocked word after every correct attempt from the user.
 	private void blockedWordUpdating() {
 
 		String newWord = "";
