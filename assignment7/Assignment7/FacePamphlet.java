@@ -49,7 +49,7 @@ public class FacePamphlet extends Program
 	// for canvas
 	private FacePamphletCanvas canvas;
 	
-	// aq ubralod vamateb iteraqtorebs da actionlisteners.
+	// adding iteractors and actionlisteners.
 	public void init() {
 		// You fill this in
 		
@@ -108,33 +108,33 @@ public class FacePamphlet extends Program
     public void actionPerformed(ActionEvent e) {
 		// You fill this in as well as add any additional methods
     	
-    	// tu daawva addButtons
+// If the Add button is pressed
     	if(e.getSource().equals(addButton) && !nameField.getText().equals("")){
-    		// tu ar arsebobs acc
+    // If the account does not exist
     		if(!info.containsProfile(nameField.getText())){
     			lastProf = new FacePamphletProfile(nameField.getText());
     			info.addProfile(lastProf);
     			canvas.displayProfile(lastProf);
     			canvas.showMessage("New profile created.");
     		}
-    		// tu ukve arsebobs am saxelit acc.
+    // If the account already exists
     		else{
     			lastProf = info.getProfile(nameField.getText());
     			canvas.displayProfile(lastProf);
     			canvas.showMessage("A profile with the name " + lastProf.getName() +" already exists.");
     		}
     	}
-    	//  delete button
+       //  delete button
     	else if(e.getSource().equals(deleteButton) && !nameField.getText().equals("")){
     		
-    		// tu arsebobs acc da vshli.
+       // If the account exists and should be deleted
     		if(info.containsProfile(nameField.getText())){
     			lastProf=null;
     			info.deleteProfile(nameField.getText());
     			canvas.remove(lastProf);
     			canvas.showMessage("Profile of  " + nameField.getText() + " deleted" );
     		}
-    		// tu am saxelit acc ar arsebobs.
+       // Account with this name does not exist.
     		else{
     			lastProf=null;
     			canvas.showMessage("A profile with the name of " + nameField.getText() + " "+"does not exist.");
@@ -143,14 +143,14 @@ public class FacePamphlet extends Program
     	// look up button
     	else if(e.getSource().equals(lookUpButton) && !nameField.getText().equals("")){
     		
-    		// tu arsebobs acc mis profileze unda gadavide.
+        // If the account exists, display its profile.
     		if(info.containsProfile(nameField.getText())){
  
     			lastProf = info.getProfile(nameField.getText());
     			canvas.displayProfile(lastProf);
     			canvas.showMessage("Displaying " + nameField.getText());
     		}
-    		// tu ar arsebobs profile shesabamisi mesiji gamochndeba.
+        // If the profile does not exist, show an appropriate message.
     		else{
     		
     			canvas.remove(lastProf);
@@ -161,14 +161,14 @@ public class FacePamphlet extends Program
     	}
     	// changestatus button
     	else if(e.getSource().equals(changeStatusButton) || e.getSource().equals(statusField) && !statusField.getText().equals("")){
-    		// ar arsebobs profile.
+    		// profile does not exist.
     		if(lastProf==null){
 
     			canvas.showMessage("Please select a profile to change status");
     			statusField.setText("");
     		}
-    		// arsebobs profile da statuss vucvli , vaupdateb profiles da
-    		// gamomakvs shesabamisi mesijic.
+    		// The profile exists and the status is not empty; update the profile
+            // and display an appropriate message.
     		else{
 
 				lastProf.setStatus(statusField.getText());
@@ -181,7 +181,7 @@ public class FacePamphlet extends Program
     	}
     	// change picture button
     	else if(e.getSource().equals(changePictureButton) || e.getSource().equals(pictureField) && !pictureField.getText().equals("")){
-    		// tu profile arsebobs
+    		// if profile exists
     		if(lastProf!=null){		
     		try { 
     		image = new GImage(pictureField.getText());
@@ -192,12 +192,12 @@ public class FacePamphlet extends Program
     		} catch (ErrorException ex) { 
     		// Code that is executed if the filename cannot be opened. 
     			image = null;
-    			// araswori file name
+    			// incorrect file name
     			canvas.showMessage("Unable to open image file: " + pictureField.getText());
     			pictureField.setText("");
     		  }
     		}
-    		// tu profile ar arsebobs.
+    		// if profile doesn't exists
     		else{
     			canvas.showMessage("Please select a profile to change picture");
     		    pictureField.setText("");
@@ -207,17 +207,17 @@ public class FacePamphlet extends Program
     	else if(e.getSource().equals(addFriendButton) || e.getSource().equals(friendField) && !friendField.getText().equals("")){
     		
     		if(lastProf!=null){
-    			// tu arsebobs proifle
+    		// if profile exists
     			if(info.containsProfile(friendField.getText())){
     				friendProf = info.getProfile(friendField.getText());
-    				// tu ukve megobaria
+    				// if is friend already
     				if(!lastProf.addFriend(friendField.getText())){
     					
     					canvas.showMessage(lastProf.getName() + " already has " + friendField.getText()+" as a friend");
     					friendField.setText("");
     				}
-    				// tu jer ar yofilan megobrebi
-    				else{
+                    // If they are no friends.
+     				else{
     					friendProf.addFriend(lastProf.getName());
     					lastProf.addFriend(friendField.getText());
     					canvas.displayProfile(lastProf);
@@ -225,7 +225,7 @@ public class FacePamphlet extends Program
     					friendField.setText("");
     				}
     			}
-    			// tu ar arsebobs profile
+    			//  if profile doesn't exist
     			else{
 
     			canvas.showMessage(friendField.getText()+" does not exist.");
@@ -233,7 +233,7 @@ public class FacePamphlet extends Program
     				
     			}
     		}
-    		// txove rom airchios profili.
+    		
     		else{
     			canvas.showMessage("Please select a profile to add friend.");
     			friendField.setText("");
