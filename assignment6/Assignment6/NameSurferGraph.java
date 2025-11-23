@@ -25,14 +25,12 @@ public class NameSurferGraph extends GCanvas
 	
 	public NameSurferGraph() {
 		addComponentListener(this);
-		//	 You fill in the rest //
 		displayedEntries = new ArrayList <NameSurferEntry>();
 	}
 	
 	/**
 	* Clears the list of name surfer entries stored inside this class.
 	*/
-	// asuftavebs lists roca clears davawvebi.
 	public void clear() {
 		//	 You fill this in //
 		displayedEntries.clear();
@@ -44,7 +42,6 @@ public class NameSurferGraph extends GCanvas
 	* Note that this method does not actually draw the graph, but
 	* simply stores the entry; the graph is drawn by calling update.
 	*/
-	//amatebs listshi
 	public void addEntry(NameSurferEntry entry) {
 		// You fill this in //
 		displayedEntries.add(entry);
@@ -60,7 +57,6 @@ public class NameSurferGraph extends GCanvas
 	* the size of the canvas changes.
 	*/
 	
-	// esaa mtavari metodi , aketebs updates.
 	public void update() {
 		// You fill this in //
 		removeAll();
@@ -74,9 +70,7 @@ public class NameSurferGraph extends GCanvas
 
 	}
 
-	
-	// xatavs im vertikalur da horizontalur xazebs romlebic ar ishleba , aseve 
-	// dekadebis labelebs.
+
 	private void drawLinesAndLabels() {
 
 		GLine line1 = new GLine(0, GRAPH_MARGIN_SIZE, getWidth(), GRAPH_MARGIN_SIZE);
@@ -96,7 +90,7 @@ public class NameSurferGraph extends GCanvas
 	}
 
 	
-	// dekadebis labelebi.
+	
 	private void drawLabels() {
 
 		for (int i = 0; i < NDECADES; i++) {
@@ -113,9 +107,10 @@ public class NameSurferGraph extends GCanvas
 	}
 	
 	
-	// aq xdeba titoeuli saxelistvis grafikis awyoba.
-	// gadavcem metods ricxvs tu meramdenea saxeli da amis mixedvit
-	// enicheba ferebi. sul gvaqvs 5 feri.
+	// Here the graph for the selected name is displayed.
+    // I call a method to get the numbers for that name, and based on them
+    // the bars are drawn. Currently, 5 bars are displayed.
+
 	private void drawGraphicsForEntries (NameSurferEntry entry ,int k){
 		
 		Color color ;
@@ -137,11 +132,12 @@ public class NameSurferGraph extends GCanvas
 			int rank = entry.getRank(i);
 			int nextRank = entry.getRank(i+1); 
 			
-			//  1 rankis danayofi mtlian canvasze.
+// Height of one rank unit on the canvas.
 			double titoRankisFasi =  ((double) getHeight()-2*GRAPH_MARGIN_SIZE) / MAX_RANK;
 		
-			// aq calcalke ganvixile 4 shemtxveva roca erti da misi shemdegi indexis rankebi 
-			// ra sheidzleba iyos.
+			
+// Here I calculate the potential rank difference between consecutive indices,
+// in case we need to determine the rank of one index relative to the next.
 			if(noneOfThemIsZero(rank,nextRank)){
 				GLine line = new GLine((i*(double)(getWidth()/NDECADES)),titoRankisFasi*rank+GRAPH_MARGIN_SIZE,((i+1)*(double)(getWidth()/NDECADES)),(double)(titoRankisFasi*nextRank+GRAPH_MARGIN_SIZE));
 				line.setColor(color);
@@ -177,8 +173,9 @@ public class NameSurferGraph extends GCanvas
 			}
 		}
 		
-	// aq calke shemyavs bolo indexis labeli , radgan masivshi bolo indexis labels ar amatebs.
-    // ganvixilav or shemtxvevas roca bolo indexis ranki 0 ia da roca ar aris 0.
+	// This calculates the label for each index, because in the array not every index has a label.
+    // I handle a special case when the rank of an index is 0 and when it isn’t 0.
+
 	if(entry.getRank(10)!=0){	
 	    int distance = 4;
 		double fasi = ((double) getHeight()-2*GRAPH_MARGIN_SIZE) / MAX_RANK;
@@ -193,25 +190,25 @@ public class NameSurferGraph extends GCanvas
 		
 	}
 	
-	// rank da misi shemdegi rank orive nolia.
+// Both the current rank and the next rank are zero.
 	private boolean isBothOfThemZero(int i, int j) {
 		return (i == 0 && j == 0);
 	}
-	// shemdegi rank nolia.
+// The next rank is zero.
 	private boolean secondRankIsZero(int i, int j) {
 		if (i != 0 && j == 0) {
 			return true;
 		}
 		return false;
 	}
-	//pirveli rank nolia
+// The first rank is zero.
 	private boolean firstIsZero(int i, int j) {
 		if (i == 0 && j != 0) {
 			return true;
 		}
 		return false;
 	}
-	//arcerti ar aris noli
+// Neither is zero.
 	private boolean noneOfThemIsZero(int i, int j ){
 		if (i!=0 && j!=0){
 			return true;
@@ -229,3 +226,4 @@ public class NameSurferGraph extends GCanvas
 	}
 	public void componentShown(ComponentEvent e) { }
 }
+
