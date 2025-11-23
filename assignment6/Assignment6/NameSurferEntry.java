@@ -33,7 +33,7 @@ public class NameSurferEntry implements NameSurferConstants {
 		
 	}
 	
-	// aq stringidan mxolod saxels vigheb.
+// Here, only the name is extracted from the string.
 	private void methodForName(String line){
 		
 		name = "";
@@ -51,7 +51,7 @@ public class NameSurferEntry implements NameSurferConstants {
 		
 	}
 	
-	// aq stringidan vigheb ricxvebs da  tokenizerit titoeul ricxvs shevyri masivshi.
+// Here, numbers are extracted from the string, and using a tokenizer, each number is placed into an array.
 	private void methodForRanks(String line) {
 
 		newStr = line.substring(name.length()+1);
@@ -71,7 +71,7 @@ public class NameSurferEntry implements NameSurferConstants {
  * Returns the name associated with this entry.
  */
 	
-	// abrunebs saxels.
+	
 	public String getName() {
 		// You need to turn this stub into a real implementation //
 		return name;
@@ -85,7 +85,6 @@ public class NameSurferEntry implements NameSurferConstants {
  * which is given by the constant START_DECADE.  If a name does
  * not appear in a decade, the rank value is 0.
  */
-	//abtunebs ranks.
 	public int getRank(int decade) {
 		// You need to turn this stub into a real implementation //
 		return ranks[decade];
@@ -97,7 +96,6 @@ public class NameSurferEntry implements NameSurferConstants {
  * NameSurferEntry.
  */
 	
-	//gadahyavs stringshi.
 	public String toString() {
 		// You need to turn this stub into a real implementation //
 		String text = "\"" + name + " " + "[";
