@@ -23,7 +23,7 @@ public class HangmanCanvas extends GCanvas {
 	 * unguessed letters are indicated by hyphens.
 	 */
 
-	// es aris labeli romelshic ewereba gamosacnobi sityva canvasze.
+	// label for blocked word 
 	GLabel blockedLabel;
 
 	public void displayWord(String word) {
@@ -58,10 +58,10 @@ public class HangmanCanvas extends GCanvas {
 	 * bottom of the window.
 	 */
 
-	// es aris label araswori characterebis chamonatvalistvis
+	// label for incorrect guesses
 	GLabel characterLabel;
 
-	// stringi sadac inaxeba araswori charebi.
+	// string for incorrect chars
 	private String arasworiChars = "";
 	
 	public void noteIncorrectGuess(char letter) {
@@ -83,7 +83,7 @@ public class HangmanCanvas extends GCanvas {
 
 		}
 
-		// stringis lengthis mixedvit amatebs tanis sxvadasxva nawils.
+		// adding body parts 
 		if (arasworiChars.length() == 1) {
 			drawHead();
 		}
