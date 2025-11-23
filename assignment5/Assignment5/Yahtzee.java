@@ -50,24 +50,26 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 		playGame();
 	}
 
-	// es aris mtavari metodi sadac xdeba sxva chashlili metodebis gamodzaxeba ,
-	// tamashis dawyeba , pirveli meore mesame gagorebebi
-	// da sabolood metodi romelic itvlis gamarjvebuls.
+
+	// This is the main method where calls to other auxiliary methods happen,
+    // including starting the game, handling the first, second, and third guesses,
+    // and finally the method that determines the winner.
 	private void playGame() {
 		/* You fill this in */
 
 		rolls();
 
-		// tamashis dasrulebis shemdeg.
+          // After the game ends.
 		for (int i = 0; i < nPlayers; i++) {
 
 			calculateUpperScore(i + 1);
 
-			// tu upper score metia 63 zea dagewereba bonus qula.
+			// If the upper score is greater than or equal to 63, award the bonus points.
+
 			if (upperScore >= 63) {
 
-				// aq matricshi amatebs upper bonuss da updates uketebs rata
-				// gamochndes cxrilshi
+				 // Add the upper bonus in the score matrix and update it
+                 // so it appears correctly on the scorecard.
 				matrixOfScores[UPPER_BONUS - 1][i] = 35;
 				display.updateScorecard(UPPER_BONUS, i + 1, 35);
 				matrixOfScores[TOTAL - 1][i] = matrixOfScores[TOTAL - 1][i] + matrixOfScores[UPPER_BONUS - 1][i];
@@ -90,7 +92,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 
 	}
 
-	// arendomebs kamatlebs.
+	// This method randomizes dices.
 	private void diceRandomizer() {
 
 		for (int i = 0; i < N_DICE; i++) {
@@ -101,9 +103,10 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 		}
 
 	}
+	
+// This method is for validations, and afterward in this method I use the
+// whichCategory method, which calculates the grades and fills them into the array.
 
-	// es metodi aris gagorebebis da shemdeg am metodshi viyeneb whichcategory
-	// metods romelic itvlis qulebs da sheyavs cxrilshi.
 	private void rolls() {
 
 		for (int i = 0; i < N_SCORING_CATEGORIES; i++) {
@@ -125,7 +128,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 		}
 	}
 
-	// meorejer gagoreba
+	//second validation
 	private void secondGagoreba() {
 
 		for (int i = 0; i < N_DICE; i++) {
@@ -137,7 +140,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 
 	}
 
-	// mesamejer gagoreba
+	//third validation
 	private void thirdGagoreba() {
 
 		for (int i = 0; i < N_DICE; i++) {
@@ -149,23 +152,24 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 
 	}
 
-	// metodi romelic anaxlebs cxrils da wers yovel archeul kategoriashi qulas.
+// A method that updates the array and writes the grade in each selected category.
 	private void WhichCategory(int whichPlayer, int category) {
 
 		category = display.waitForPlayerToSelectCategory();
 
-		// im shemtxbebasi tu category gamoyenebulia ukve , vadzlev sashualebas
-		// tavidan airchios.
+		// In case the category has already been used, I allow the user
+        // to choose again.
+
 		if (usedCategories[category - 1][whichPlayer - 1] == 1) {
 			display.printMessage("You have already selected this category, please try another!");
 			WhichCategory(whichPlayer, category);
 		}
 
-		// tu category araris gamoyeenbuli
+		// if category isn't used.
 		else if (usedCategories[category - 1][whichPlayer - 1] == 0) {
 
-			// tu sworad aarchia kategoria. vaupdateb cxrils da matricshi
-			// shemyavs shesabamisi kategoriis qula.
+			// If the user selects the correct category, I update the array and
+            // insert the corresponding category's grade into the matrix.
 			if (categoryChecker(dice, category) == true) {
 
 				int score = scoreByCategory(category);
@@ -174,8 +178,8 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 
 				matrixOfScores[category - 1][whichPlayer - 1] = score;
 
-				// aq mivutiteb rom kategoria gamoyenebulia rata meorejer agar
-				// gadaaweros.
+				// Here I mark that the category has been used so it cannot be 
+                // selected a second time.
 				usedCategories[category - 1][whichPlayer - 1] = 1;
 
 				matrixOfScores[TOTAL - 1][whichPlayer - 1] += score;
@@ -183,7 +187,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 				display.updateScorecard(TOTAL, whichPlayer, matrixOfScores[TOTAL - 1][whichPlayer - 1]);
 
 			}
-			// tu kategoria arasworad aarchia im adgilas 0 chaiwereba.
+// If the category is selected incorrectly, a 0 will be written in that spot.
 			else {
 				display.updateScorecard(category, whichPlayer, 0);
 
@@ -196,7 +200,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 
 	}
 
-	// itvlis upper scores.
+	// Calculates upper scores.
 	private void calculateUpperScore(int whichPlayer) {
 
 		upperScore = 0;
@@ -208,7 +212,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 		display.updateScorecard(UPPER_SCORE, whichPlayer, upperScore);
 	}
 
-	// itvlis lower scores da gamoakvs cxrilshi
+// Calculates the lower scores and displays them in the array.
 	private void calculateLowerScore(int whichPlayer) {
 		
 		lowerScore = 0;
@@ -220,19 +224,19 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 		display.updateScorecard(LOWER_SCORE, whichPlayer, lowerScore);
 	}
 
-	// metodi imiss gamosatvlelad tu vin gaimarjva
+// Method to determine who won
 	private void whoIsTheWinner() {
-		// shevkmeni list sadac inaxeba titoeuli motamashis totalebi
+    // Created a list where each player's total scores will be stored
 		ArrayList<Integer> totals = new ArrayList<Integer>();
 
 		int whichPlayer = 0;
 
-		// vamateb listshi totalebs.
+// I add the totals to the list.
 		for (int i = 0; i < nPlayers; i++) {
 			totals.add(matrixOfScores[TOTAL - 1][i]);
 		}
 
-		// aq gamovavlen romlis totalia maqsimumi.
+// Here I determine whose total score is the maximum.
 		int max = 0;
 		for (int i = 0; i < totals.size(); i++) {
 			if (totals.get(i) > max) {
@@ -243,13 +247,13 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 
 		String winnerGuy = "";
 
-		// playerNames arrayshi indexad vwer im cifrs romelmac moigo tamashi
+// In the playerNames array, I use the index of the player who won the game
 		winnerGuy = playerNames[whichPlayer];
 
 		display.printMessage("Congratulations " + winnerGuy + " you're the winner with a total score of " + max + "!");
 	}
 
-	// es martivi metodia qulebis gamosatvlelad.
+// This is a simple method for displaying the scores.
 	private int scoreByCategory(int category) {
 
 		int score = 0;
@@ -307,18 +311,18 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 
 	}
 
-	// aq mowmdeba kategoriebi tu sworad aris mititebuli.
+// Here we check the categories if they are valid.
 	private boolean categoryChecker(int dice[], int category) {
 
-		// 1 dan 6mde da chance yoveltvis sworia.
+    // Categories 1 to 6 and Chance are always valid.
 		if (category >= ONES && category <= SIXES || category == CHANCE) {
 
 			return true;
 
 		}
 
-		// aq shevqmeni array sadac chawerilia monacemebi tu romeli ricxvi
-		// ramdenjeraa gagorebuli.
+		 // Here I create an array where the occurrences of each number
+         // rolled on the dice are counted.
 		int statistics[] = new int[6];
 
 		for (int i = 1; i <= dice.length; i++) {
@@ -332,8 +336,8 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 			}
 		}
 
-		// aq ganxiluli mak titoeuli kategoria ra shemtxvevashia martali 
-		// martivi kodit.
+		 // Here, based on the calculated counts, I determine which complex
+         // category can be valid and return true if it is valid.
 		if (category == THREE_OF_A_KIND) {
 			if (statistics[0] >= 3 || statistics[1] >= 3 || statistics[2] >= 3 || statistics[3] >= 3
 					|| statistics[4] >= 3 || statistics[5] >= 3) {
@@ -345,8 +349,8 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 				return true;
 			}
 		}
-		// full houseshi 3 ertnairi unda ikos da danarcheni oric ertnairi. chadgmuli for
-		// loopebit gadavyevi da tu piroba daakmayofila true aris.
+		// In a Full House, there must be three of one kind and two of another. 
+        // Using nested for loops, I check this, and if the condition is met, return true.
 		else if (category == FULL_HOUSE) {
 			for (int j = 0; j < statistics.length; j++) {
 				for (int i = 0; i < statistics.length; i++) {
