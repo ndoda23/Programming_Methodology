@@ -79,7 +79,7 @@ public class FacePamphletCanvas extends GCanvas
 	}
 	
 	
-	// xatavs megobrebis lists.
+	// draws friends list.
 	private void drawFriendList(Iterator<String> friendsList) {
 		// TODO Auto-generated method stub
 		GLabel header = new GLabel("Friends:");
@@ -89,7 +89,7 @@ public class FacePamphletCanvas extends GCanvas
 	    for(int i = 1;friendsList.hasNext();i++){
 	    	GLabel nextFriend = new GLabel(friendsList.next());	
 	    	nextFriend.setFont(PROFILE_FRIEND_FONT );
-	    	// megobrebs shoris distancia
+	    	// distance between friends
 	    	int dist = 15;
 	    	add(nextFriend,getWidth()/2-header.getWidth()/2,
 	    			IMAGE_MARGIN + TOP_MARGIN + nameLabel.getAscent() + header.getAscent()/2 +dist*i);
@@ -97,8 +97,8 @@ public class FacePamphletCanvas extends GCanvas
 	}
 
 
-	// aketebs statuis warweras , yovel gamodzaxebaze tavidan gadaewereba statusi
-	// tu statusi ar aqvs daewreba no current status.
+	// Sets the status message; for each update, the status is overwritten.
+    // If no status is provided, the current status remains unchanged.
 	private void drawStatus(String st,FacePamphletProfile profile) {
 		// TODO Auto-generated method stub
 		
@@ -118,8 +118,8 @@ public class FacePamphletCanvas extends GCanvas
 	}
 
 
-	// gamosaxavs fotos, tu foto null aris mashin mis magivrad iqneba
-	// martkutxedi fromelshic weria: No Image.
+	// Displays the photo; if the photo is null, it will be ignored.
+    // In a simple implementation, it could display: "No Image".
 	private void drawImage(GImage image) {
 		// TODO Auto-generated method stub
 		if(image==null){
@@ -138,9 +138,7 @@ public class FacePamphletCanvas extends GCanvas
 			 add(image);
 		}
 	}
-
-
-	// xatavs saxels.
+						
 	private void drawName(String Name){
 		nameLabel = new GLabel (Name);
 		nameLabel.setFont(PROFILE_NAME_FONT);
