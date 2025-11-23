@@ -30,8 +30,8 @@ public class NameSurferDataBase implements NameSurferConstants {
  * occurs as the file is being read.
  */
 	
-	// kitxulobs names - data fails da base hashmapshi sheaqvs saxeli da 
-	// am saxelis mixedvit monacemebi.
+	// Stores names – retrieves the name from the data file and the base HashMap, 
+    // and counts the occurrences for that name.
 	public NameSurferDataBase(String filename) {
 		// You fill this in //
 		
@@ -66,10 +66,10 @@ public class NameSurferDataBase implements NameSurferConstants {
 	 * the name does not appear in the database, this method returns null.
 	 */
 	
-	// aq vitvaliswineb shemtxvevas rom didi asoti shemoiyvanon saxeli
-	// mas gadavaketeb iset stringad , rogorc mocemuli gvak names -data fileshi.
+	// Here I need to ensure that if a large entry is made,   
+    // it is converted into a string, just like it is stored in the names-data file.
+
 	public NameSurferEntry findEntry(String name) {
-		// You need to turn this stub into a real implementation //
 
 		name = name.toUpperCase();
 		String rem = name.substring(1);
